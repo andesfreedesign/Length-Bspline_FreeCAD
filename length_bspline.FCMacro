@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+# (c) MaxiV, 2023
+
+__Name__ = 'Length-Bspline_FreeCAD'
+__Comment__ = 'Simple macro to get the length of a bspline from a sketch in FreeCAD'
+__Author__ = 'Maxi Vasquez'
+__Version__ = '0.1'
+__Date__ = '2023-07-23'
+__License__ = 'LGPL-2.0-or-later'
+
 import FreeCADGui as Gui
 import FreeCAD
 import Part
