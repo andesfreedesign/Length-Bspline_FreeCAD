@@ -1,0 +1,61 @@
+import FreeCADGui as Gui
+import FreeCAD
+import Part
+from PySide2 import QtWidgets
+
+def get_bspline_length(sketch):
+    if not sketch.isDerivedFrom("Sketcher::SketchObject"):
+        raise ValueError("The selected object is not a sketch.")
+
+    geom = sketch.Shape
+
+    if geom.isNull():
+        raise ValueError("The selected sketch is empty.")
+
+    curves = geom.Edges
+    total_length = 0.0
+
+    for curve in curves:
+        # We just add the length of the B-splines
+        if isinstance(curve.Curve, Part.BSplineCurve):
+            length = curve.Length
+            total_length += length
+
+    return total_length
+
+class LengthDialog(QtWidgets.QDialog):
+    def __init__(self, length):
+        super().__init__()
+        self.setWindowTitle("B-spline")
+        self.setMinimumWidth(300)
+        self.setMinimumHeight(100)
+
+        layout = QtWidgets.QVBoxLayout()
+        label = QtWidgets.QLabel("B-spline length: {:.2f} mm".format(length))
+        layout.addWidget(label)
+
+        ok_button = QtWidgets.QPushButton("OK")
+        ok_button.clicked.connect(self.accept)
+        layout.addWidget(ok_button)
+
+        self.setLayout(layout)
+
+def main():
+    doc = FreeCAD.ActiveDocument
+    selection = Gui.Selection.getSelection()
+
+    if len(selection) != 1:
+        FreeCAD.Console.PrintError("Please select a sketch with a B-spline.\n")
+        return
+
+    sketch = selection[0]
+    try:
+        length = get_bspline_length(sketch)
+        dialog = LengthDialog(length)
+        dialog.exec_()
+    except ValueError as e:
+        FreeCAD.Console.PrintError(str(e) + "\n")
+
+if __name__ == "__main__":
+    main()
+
