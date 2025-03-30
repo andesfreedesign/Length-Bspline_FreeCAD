@@ -4,14 +4,14 @@
 __Name__ = 'Length-Bspline_FreeCAD'
 __Comment__ = 'Simple macro to get the length of a bspline from a sketch in FreeCAD'
 __Author__ = 'Maxi Vasquez'
-__Version__ = '0.1'
-__Date__ = '2023-07-23'
+__Version__ = '0.2'
+__Date__ = '2025-03-30'
 __License__ = 'LGPL-2.0-or-later'
 
 import FreeCADGui as Gui
 import FreeCAD
 import Part
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 def get_bspline_length(sketch):
     if not sketch.isDerivedFrom("Sketcher::SketchObject"):
