@@ -11,7 +11,7 @@ __License__ = 'LGPL-2.0-or-later'
 import FreeCADGui as Gui
 import FreeCAD
 import Part
-from PySide6 import QtWidgets
+from PySide import QtWidgets
 
 def get_bspline_length(sketch):
     if not sketch.isDerivedFrom("Sketcher::SketchObject"):
